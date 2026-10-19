@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <title>Provenance Vault · CipherTrace</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-glyph">⌬</span><div><strong>Provenance</strong><small>VAULT / CIPHERTRACE</small></div></div>
+      <nav class="side-nav" aria-label="Primary navigation">
+        <a class="active" href="#overview"><span>▦</span> Overview</a>
+        <a href="#distribution"><span>⇥</span> Distribution</a>
+        <a href="#recipients"><span>◉</span> Recipients</a>
+        <a href="#ledger"><span>⌁</span> Offline ledger</a>
+      </nav>
+      <div class="sidebar-bottom"><div class="secure-pill"><span class="pulse"></span><div><strong>Local vault online</strong><small>Encrypted at rest</small></div></div><p>Offline-first attribution for sensitive document workflows.</p></div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><div><span class="crumb">WORKSPACE / ATTRIBUTION</span><h1>Document provenance, made visible.</h1></div><div class="top-actions"><span class="api-status"><i id="apiDot"></i><span id="apiLabel">Checking API</span></span><button class="icon-button" id="refreshButton" title="Refresh ledger status">↻</button><div class="avatar">CT</div></div></header>
+      <div id="notice" class="notice hidden" role="status"></div>
+      <section id="overview" class="hero"><div><span class="eyebrow">CIPHERTRACE CONTROL ROOM</span><h2>Track every copy.<br><em>Prove where it went.</em></h2><p>Distribute encrypted documents with a unique forensic watermark, then produce a signed receipt that survives offline review.</p></div><button class="primary-button" id="workflowButton"><span>✦</span> Run demo workflow</button></section>
+      <section class="stats-grid" aria-label="Vault statistics"><article class="stat-card"><div class="stat-icon cyan">◈</div><div><small>ENCRYPTED PACKAGES</small><strong id="packageStat">0</strong><span>this workspace</span></div></article><article class="stat-card"><div class="stat-icon violet">◉</div><div><small>REGISTERED RECIPIENTS</small><strong id="recipientStat">0</strong><span>demo identities</span></div></article><article class="stat-card"><div class="stat-icon amber">⌁</div><div><small>LEDGER EVENTS</small><strong id="eventStat">0</strong><span id="ledgerStat">Awaiting first event</span></div></article><article class="stat-card"><div class="stat-icon green">✓</div><div><small>CRYPTOGRAPHY</small><strong>ML-DSA</strong><span>post-quantum ready</span></div></article></section>
+      <div class="workspace-grid">
+        <section class="panel distribute-panel" id="distribution"><div class="panel-heading"><div><span class="eyebrow">01 / DISTRIBUTE</span><h3>Encrypt a document</h3></div><span class="step-badge">AES-256-GCM</span></div><p class="panel-intro">Create a recipient-bound package. The payload stays encrypted until the selected identity decrypts it.</p><form id="packageForm"><label>Document label<input id="documentLabel" required value="Q4 strategic brief.pdf" placeholder="e.g. board-brief.pdf"></label><label>Document content<textarea id="documentContent" required rows="5" placeholder="Paste demo content or a confidential note…">Confidential strategy memo — distribution controlled by CipherTrace.</textarea></label><label>Recipient<select id="packageRecipient" required></select></label><button class="primary-button full" type="submit" id="packageButton">Create encrypted package <span>→</span></button></form><div class="form-foot"><span>●</span> Unique invisible forensic watermark is generated at decrypt time</div></section>
+        <section class="panel recipient-panel" id="recipients"><div class="panel-heading"><div><span class="eyebrow">02 / RECIPIENTS</span><h3>Trusted roster</h3></div><button class="text-button" id="seedButton">+ Seed demo roster</button></div><p class="panel-intro">Each recipient has an independent KEM key and signing identity.</p><form id="recipientForm" class="inline-form"><input id="recipientId" required placeholder="recipient-id (e.g. legal-team)"><button class="secondary-button" type="submit">Add</button></form><div class="table-wrap"><table class="data-table"><thead><tr><th>Identity</th><th>Key status</th><th>Added</th><th></th></tr></thead><tbody id="recipientRows"><tr><td colspan="4" class="empty-cell">No recipients yet. Seed the demo roster to begin.</td></tr></tbody></table></div></section>
+      </div>
+      <div class="lower-grid">
+        <section class="panel session-panel"><div class="panel-heading"><div><span class="eyebrow">03 / DECRYPT SESSION</span><h3>Generate a receipt</h3></div><span class="locked">⌁ OFFLINE CAPABLE</span></div><div class="session-card"><div class="session-top"><div class="doc-icon">▤</div><div><strong id="packageTitle">No package selected</strong><span id="packageMeta">Create an encrypted package above</span></div></div><div class="session-fields"><div><small>RECIPIENT</small><strong id="sessionRecipient">—</strong></div><div><small>PACKAGE ID</small><strong class="mono" id="sessionPackage">—</strong></div></div><button class="secondary-button full" id="decryptButton" disabled>Decrypt & sign receipt <span>→</span></button></div><div class="receipt-panel" id="receiptPanel"><div class="receipt-empty"><span>✧</span><p>Your signed PQ decryption receipt will appear here.</p></div></div></section>
+        <section class="panel verify-panel"><div class="panel-heading"><div><span class="eyebrow">04 / VERIFY</span><h3>Leak verification</h3></div><span class="step-badge">FORENSIC</span></div><p class="panel-intro">Paste a watermark ID or a leaked text copy. Zero-width forensic markers are extracted locally before the ledger match.</p><form id="verifyForm"><label>Watermark ID<input id="watermarkInput" placeholder="wm_… or UUID from receipt"></label><label>Leaked document <span class="optional">optional</span><textarea id="leakedDocumentInput" rows="3" placeholder="Paste the suspected leaked text here…"></textarea></label><label>Receipt signature <span class="optional">optional</span><input id="signatureInput" placeholder="Paste to verify an external receipt"></label><button class="secondary-button full" type="submit">Verify watermark <span>⌁</span></button></form><div class="verify-result" id="verifyResult"><span class="result-icon">?</span><div><strong>Waiting for a watermark</strong><p>The forensic match will be shown here.</p></div></div></section>
+      </div>
+      <section class="panel ledger-panel" id="ledger"><div class="panel-heading"><div><span class="eyebrow">05 / INTEGRITY</span><h3>Tamper-evident offline ledger</h3></div><button class="secondary-button small" id="verifyLedgerButton">Verify chain</button></div><div class="ledger-status" id="ledgerStatus"><div class="ledger-icon">⌁</div><div><strong>Ledger integrity pending</strong><p>Run a verification to inspect the append-only hash chain.</p></div><span class="status-badge pending">PENDING</span></div><div class="ledger-details"><span><b>Chain design</b> SHA-256 linked blocks</span><span><b>Signature</b> ML-DSA-65 / HMAC fallback</span><span><b>Storage</b> Local SQLite ledger</span></div></section>
+      <footer><span>PROVENANCE VAULT / CIPHERTRACE</span><span>All demo cryptography runs through your local API.</span></footer>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

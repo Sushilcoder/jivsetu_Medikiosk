@@ -1,0 +1,7 @@
+fastapi>=0.100
+uvicorn>=0.22
+pytest>=7
+httpx>=0.24
+cryptography>=41
+# Optional NIST post-quantum implementations; the API has a labeled fallback.
+pqcrypto>=0.3.4
