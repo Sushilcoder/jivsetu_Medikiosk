@@ -98,3 +98,9 @@ def verify(body:VerifyRequest):
  return attribution.verify_watermark(watermark_id,body.signature)
 @app.get("/attribution/ledger/verify")
 def ledger_verify():return attribution.verify_ledger()
+
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+FRONTEND_DIR=Path(__file__).resolve().parents[2]/"frontend"
+if FRONTEND_DIR.is_dir():
+ app.mount("/",StaticFiles(directory=FRONTEND_DIR,html=True),name="frontend")

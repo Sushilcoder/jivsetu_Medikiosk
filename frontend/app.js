@@ -1,4 +1,4 @@
-const API = window.CIPHERTRACE_API || 'http://localhost:8000';
+const API = window.CIPHERTRACE_API || (location.protocol === 'file:' ? 'http://localhost:8000' : '');
 const state = { recipients: [], package: null, receipt: null, ledger: null };
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
